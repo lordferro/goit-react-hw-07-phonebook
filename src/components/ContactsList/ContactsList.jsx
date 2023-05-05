@@ -7,26 +7,26 @@ import { fetchContacts } from 'redux/contactsOperation';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector(state => state.contacts);
-  const filteredContacts = useSelector(selectFilteredContacts)
+  const { isLoading, error } = useSelector(state => state.contacts);
+  const filteredContacts = useSelector(selectFilteredContacts);
 
-  useEffect(() => {dispatch(fetchContacts())}, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
-      {isLoading ? (
-        <p>loading...</p>
-      ) : (
-        <StyledContactsList>
-          {filteredContacts.map(contact => {
-            return (
-              <li key={contact.id}>
-                <ContactItem contact={contact} />
-              </li>
-            );
-          })}
-        </StyledContactsList>
-      )}
+      {isLoading && !error && <p>loading...</p>}
+
+      <StyledContactsList>
+        {filteredContacts.map(contact => {
+          return (
+            <li key={contact.id}>
+              <ContactItem contact={contact} />
+            </li>
+          );
+        })}
+      </StyledContactsList>
     </>
   );
 };

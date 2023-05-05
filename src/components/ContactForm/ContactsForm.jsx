@@ -51,7 +51,6 @@ export const ContactsForm = () => {
         required
       />
       <button type="submit">Add contact</button>
-         
     </StyledContactsForm>
   );
 };

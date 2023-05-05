@@ -3,23 +3,19 @@ import { Wrapper } from './ContactItem.styled';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from 'redux/contactsOperation';
 
-
 export const ContactItem = ({ contact: { name, phone, id } }) => {
   const dispatch = useDispatch();
 
-  const handleDelete= () => {
-          dispatch(deleteContact(id))
-        }
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <Wrapper>
       <span>
         {name}: {phone}
       </span>
-      <button
-        type="button"
-        onClick={handleDelete}
-      >
+      <button type="button" onClick={handleDelete}>
         Delete
       </button>
     </Wrapper>
