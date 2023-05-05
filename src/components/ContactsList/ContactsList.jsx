@@ -1,22 +1,32 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { StyledContactsList } from './ContactsList.styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from 'redux/selectors';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contactsOperation';
 
 export const ContactsList = () => {
-  const contacts = useSelector(selectFilteredContacts)
-  
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector(state => state.contacts);
+  const filteredContacts = useSelector(selectFilteredContacts)
+
+  useEffect(() => {dispatch(fetchContacts())}, [dispatch]);
+
   return (
     <>
-      <StyledContactsList>
-        {contacts.map(contact => {
-          return (
-            <li key={contact.id}>
-              <ContactItem contact={contact} />
-            </li>
-          );
-        })}
-      </StyledContactsList>
+      {isLoading ? (
+        <p>loading...</p>
+      ) : (
+        <StyledContactsList>
+          {filteredContacts.map(contact => {
+            return (
+              <li key={contact.id}>
+                <ContactItem contact={contact} />
+              </li>
+            );
+          })}
+        </StyledContactsList>
+      )}
     </>
   );
 };

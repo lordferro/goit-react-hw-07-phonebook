@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledContactsForm } from './ContactsForm.styled';
-import shortid from 'shortid';
 
 import { selectContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsOperation';
 
 export const ContactsForm = () => {
   const contacts = useSelector(selectContacts);
@@ -13,9 +13,8 @@ export const ContactsForm = () => {
     e.preventDefault();
 
     const newContact = {
-      id: shortid.generate(),
       name: form.name.value,
-      number: form.number.value,
+      phone: form.number.value,
     };
 
     const normalizedName = newContact.name.toLowerCase();
@@ -24,7 +23,7 @@ export const ContactsForm = () => {
       return alert(`${form.name.value} is already in contacts`);
     }
 
-    // dispatch(addContact(newContact));
+    dispatch(addContact(newContact));
     form.reset();
   };
 
@@ -52,7 +51,7 @@ export const ContactsForm = () => {
         required
       />
       <button type="submit">Add contact</button>
-     
+         
     </StyledContactsForm>
   );
 };

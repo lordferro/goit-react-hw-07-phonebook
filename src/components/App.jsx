@@ -5,6 +5,7 @@ import { Filter } from './Filter/Filter';
 import 'index.css';
 import { Wrapper } from './App.styled';
 
+
 export const App = () => {
 
   return (
