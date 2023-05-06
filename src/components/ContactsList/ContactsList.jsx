@@ -1,14 +1,14 @@
 import { ContactItem } from 'components/ContactItem/ContactItem';
 import { StyledContactsList } from './ContactsList.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectFilteredContacts } from 'redux/selectors';
+import { selectContacts, selectFilteredContacts } from 'redux/selectors';
 import { useEffect } from 'react';
 import { fetchContactsThunk } from 'redux/contactsOperation';
 import { ProgressBar } from 'react-loader-spinner';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
-  const { isLoading, error } = useSelector(state => state.contacts);
+  const { isLoading, error } = useSelector(selectContacts);
   const filteredContacts = useSelector(selectFilteredContacts);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export const ContactsList = () => {
             </li>
           );
         })}
-      </StyledContactsList> 
+      </StyledContactsList>
     </>
   );
 };

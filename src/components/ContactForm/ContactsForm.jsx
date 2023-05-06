@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledContactsForm } from './ContactsForm.styled';
-import { selectContacts, selectIsAdding } from 'redux/selectors';
+import { selectContactsItems, selectIsAdding } from 'redux/selectors';
 import { addContactThunk } from 'redux/contactsOperation';
 import { ColorRing } from 'react-loader-spinner';
 import { startAddingContact } from 'redux/contactsSlice';
 
 
 export const ContactsForm = () => {
-  const contacts = useSelector(selectContacts);
+  const contacts = useSelector(selectContactsItems);
   const isAdding = useSelector(selectIsAdding)
   const dispatch = useDispatch();
 
