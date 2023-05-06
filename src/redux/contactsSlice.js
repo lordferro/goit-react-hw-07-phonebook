@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { addContact, deleteContact, fetchContacts } from './contactsOperation';
+import { addContactThunk, deleteContactThunk, fetchContactsThunk } from './contactsOperation';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -27,7 +27,7 @@ const notifyAdd = (name) =>
       theme: 'colored',
     });
 
-const extraOperations = [addContact, deleteContact, fetchContacts];
+const extraOperations = [addContactThunk, deleteContactThunk, fetchContactsThunk];
 const getOperations = type => extraOperations.map(operation => operation[type]);
 
 const handlePending = state => {
@@ -61,16 +61,15 @@ const contactsSlice = createSlice({
   initialState: { items: [], isLoading: false, isAdding: false, error: null },
   reducers: {
     startAddingContact: state => {
-      console.log('1');
       state.isAdding = true;
     },
   },
 
   extraReducers: builder => {
     builder
-      .addCase(fetchContacts.fulfilled, handleFulfilledFetchAll)
-      .addCase(addContact.fulfilled, handleFulfilledAdd)
-      .addCase(deleteContact.fulfilled, handleFulfilledDelete)
+      .addCase(fetchContactsThunk.fulfilled, handleFulfilledFetchAll)
+      .addCase(addContactThunk.fulfilled, handleFulfilledAdd)
+      .addCase(deleteContactThunk.fulfilled, handleFulfilledDelete)
       .addMatcher(isAnyOf(...getOperations('fulfilled')), handleFulfilled)
       .addMatcher(isAnyOf(...getOperations('pending')), handlePending)
       .addMatcher(isAnyOf(...getOperations('rejected')), handleRejected);

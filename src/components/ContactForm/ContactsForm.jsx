@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledContactsForm } from './ContactsForm.styled';
 import { selectContacts, selectIsAdding } from 'redux/selectors';
-import { addContact } from 'redux/contactsOperation';
+import { addContactThunk } from 'redux/contactsOperation';
 import { ColorRing } from 'react-loader-spinner';
 import { startAddingContact } from 'redux/contactsSlice';
 
@@ -28,7 +28,7 @@ export const ContactsForm = () => {
       return alert(`${form.name.value} is already in contacts`);
     }
 
-    dispatch(addContact(newContact));
+    dispatch(addContactThunk(newContact));
 
     form.reset();
   };
