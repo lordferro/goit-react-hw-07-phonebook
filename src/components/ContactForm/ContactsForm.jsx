@@ -1,15 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { StyledContactsForm } from './ContactsForm.styled';
-
-import { selectContacts } from 'redux/selectors';
+import { selectContacts, selectIsAdding } from 'redux/selectors';
 import { addContact } from 'redux/contactsOperation';
+import { ColorRing } from 'react-loader-spinner';
+import { startAddingContact } from 'redux/contactsSlice';
+
 
 export const ContactsForm = () => {
   const contacts = useSelector(selectContacts);
+  const isAdding = useSelector(selectIsAdding)
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
+    dispatch(startAddingContact())
     const form = e.target;
+   
     e.preventDefault();
 
     const newContact = {
@@ -24,6 +29,7 @@ export const ContactsForm = () => {
     }
 
     dispatch(addContact(newContact));
+
     form.reset();
   };
 
@@ -50,7 +56,18 @@ export const ContactsForm = () => {
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
       />
-      <button type="submit">Add contact</button>
+      <button type="submit" style={{ display: 'flex', alignItems: 'center' }}>
+        <ColorRing
+          visible={isAdding}
+          height="20"
+          width="20"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+        />
+        Add contact
+      </button>
     </StyledContactsForm>
   );
 };
